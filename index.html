@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Ensures proper scaling on mobile devices -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+    <!-- External stylesheet: all visual styling lives here, none inline -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- ============ HEADER ============ -->
+    <!-- Site-wide banner: identifies the app and its purpose -->
+    <header class="site-header">
+        <h1 class="site-title">Age Calculator</h1>
+        <p class="site-tagline">Find out exactly how long you've been alive, down to the day.</p>
+    </header>
+
+    <!-- ============ MAIN CONTENT ============ -->
+    <main class="page-main">
+
+        <!-- Calculator card: contains the form, actions, and results -->
+        <article class="calculator-card" aria-labelledby="calculator-title">
+
+            <!-- Card heading and description -->
+            <div class="calculator-intro">
+                <h2 id="calculator-title" class="calculator-title">Calculate Your Age</h2>
+                <p class="calculator-description">Enter your date of birth below to see a detailed breakdown of your age.</p>
+            </div>
+
+            <!-- ============ DATE OF BIRTH FORM ============ -->
+            <!-- Form groups the input with its action buttons for a logical, accessible unit -->
+            <form id="age-form" class="age-form" novalidate>
+
+                <!-- Date of Birth Section -->
+                <section class="form-section" aria-labelledby="dob-section-title">
+                    <h3 id="dob-section-title" class="visually-hidden">Date of Birth</h3>
+
+                    <div class="form-group">
+                        <!-- Label explicitly associated with the date input via matching for/id -->
+                        <label for="dob-input" class="form-label">Date of Birth</label>
+                        <input
+                            type="date"
+                            id="dob-input"
+                            name="dob"
+                            class="form-input"
+                            required
+                            aria-required="true"
+                            aria-describedby="dob-hint"
+                        >
+                        <!-- Hint text for screen reader users and sighted users alike -->
+                        <p id="dob-hint" class="form-hint">Select your birth date using the date picker.</p>
+                    </div>
+                </section>
+
+                <!-- ============ ACTION BUTTONS ============ -->
+                <div class="form-actions">
+                    <!-- submit type: triggers calculation logic in script.js -->
+                    <button type="submit" id="calculate-btn" class="btn btn-primary">Calculate Age</button>
+                    <!-- reset type: clears the form and results via script.js -->
+                    <button type="reset" id="reset-btn" class="btn btn-secondary">Reset</button>
+                </div>
+            </form>
+
+            <!-- ============ RESULTS SECTION ============ -->
+            <!-- aria-live="polite" announces updated results to screen readers without interrupting the user -->
+            <section
+                id="results-section"
+                class="results-section"
+                aria-live="polite"
+                aria-labelledby="results-title"
+            >
+                <h3 id="results-title" class="results-title">Your Age</h3>
+
+                <!-- Primary breakdown: years, months, days -->
+                <div class="results-grid">
+                    <div class="result-item">
+                        <span class="result-value" id="result-years">--</span>
+                        <span class="result-label">Years</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-value" id="result-months">--</span>
+                        <span class="result-label">Months</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-value" id="result-days">--</span>
+                        <span class="result-label">Days</span>
+                    </div>
+                </div>
+
+                <!-- Secondary breakdown: totals expressed in single units -->
+                <div class="results-grid results-grid--totals">
+                    <div class="result-item">
+                        <span class="result-value" id="result-total-months">--</span>
+                        <span class="result-label">Total Months</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-value" id="result-total-weeks">--</span>
+                        <span class="result-label">Total Weeks</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-value" id="result-total-days">--</span>
+                        <span class="result-label">Total Days</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============ INFORMATION CARD ============ -->
+            <!-- Extra facts derived from the date of birth, kept separate from the core age results -->
+            <section
+                id="info-card"
+                class="info-card"
+                aria-live="polite"
+                aria-labelledby="info-card-title"
+            >
+                <h3 id="info-card-title" class="info-card-title">Additional Details</h3>
+
+                <dl class="info-list">
+                    <div class="info-item">
+                        <dt class="info-term">Next Birthday</dt>
+                        <dd class="info-value" id="info-next-birthday">--</dd>
+                    </div>
+                    <div class="info-item">
+                        <dt class="info-term">Days Remaining Until Birthday</dt>
+                        <dd class="info-value" id="info-days-remaining">--</dd>
+                    </div>
+                    <div class="info-item">
+                        <dt class="info-term">Zodiac Sign</dt>
+                        <dd class="info-value" id="info-zodiac-sign">--</dd>
+                    </div>
+                    <div class="info-item">
+                        <dt class="info-term">Day of Birth</dt>
+                        <dd class="info-value" id="info-day-of-birth">--</dd>
+                    </div>
+                </dl>
+            </section>
+
+        </article>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="site-footer">
+        <p class="footer-copyright">&copy; 2026 Age Calculator. All rights reserved.</p>
+        <p class="footer-credit">Built by Jeeva</p>
+    </footer>
+
+    <!-- External script: all calculation and DOM logic lives here, none inline -->
+    <script src="script.js"></script>
+</body>
+</html>
