@@ -1,0 +1,581 @@
+/* =========================================================================
+   AGE CALCULATOR — STYLESHEET
+   A clean, healthcare-inspired design system.
+   Table of contents:
+     1. CSS Variables (Design Tokens)
+     2. Reset & Base Styles
+     3. Layout
+     4. Header
+     5. Calculator Card
+     6. Form (Labels, Input, Hint)
+     7. Buttons
+     8. Results Section
+     9. Information Card
+     10. Footer
+     11. Utility Classes
+     12. Animations
+     13. Accessibility (Focus States)
+     14. Responsive Design (Tablet & Mobile)
+   ========================================================================= */
+
+/* =========================================================================
+   1. CSS VARIABLES (DESIGN TOKENS)
+   Centralizing colors, spacing, shadows, radii and transitions here makes
+   the whole theme tweakable from a single place and keeps values consistent
+   across every component below.
+   ========================================================================= */
+:root {
+    /* Colors — primary (blue) */
+    --color-primary: #2563eb;
+    --color-primary-dark: #1d4ed8;
+    --color-primary-light: #dbeafe;
+
+    /* Colors — accent (green) */
+    --color-accent: #16a34a;
+    --color-accent-dark: #15803d;
+    --color-accent-light: #dcfce7;
+
+    /* Neutrals */
+    --color-white: #ffffff;
+    --color-bg: #f4f7fa;
+    --color-bg-soft: #f1f5f9;
+    --color-border: #e2e8f0;
+    --color-text: #1e293b;
+    --color-text-muted: #64748b;
+    --color-text-subtle: #94a3b8;
+
+    /* Feedback */
+    --color-focus-ring: #93c5fd;
+
+    /* Typography */
+    --font-family-base: "Segoe UI", "Inter", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-md: 1.125rem;
+    --font-size-lg: 1.5rem;
+    --font-size-xl: 2rem;
+    --font-size-xxl: 2.5rem;
+
+    /* Spacing scale */
+    --space-xs: 0.5rem;
+    --space-sm: 0.75rem;
+    --space-md: 1rem;
+    --space-lg: 1.5rem;
+    --space-xl: 2rem;
+    --space-xxl: 3rem;
+
+    /* Border radius */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-full: 999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+    --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 20px 40px rgba(15, 23, 42, 0.12);
+    --shadow-focus: 0 0 0 4px var(--color-focus-ring);
+
+    /* Transitions */
+    --transition-fast: 150ms ease;
+    --transition-base: 220ms ease;
+    --transition-slow: 400ms ease;
+
+    /* Layout */
+    --container-max-width: 680px;
+}
+
+/* =========================================================================
+   2. RESET & BASE STYLES
+   A minimal reset keeps default browser spacing/box-sizing from fighting
+   the design system, without stripping useful native behaviors.
+   ========================================================================= */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd {
+    margin: 0;
+}
+
+button {
+    font-family: inherit;
+}
+
+/* =========================================================================
+   3. LAYOUT
+   A flex column on the body pushes the footer down while the main content
+   grows to fill the viewport, giving a full-height responsive layout
+   without relying on fixed heights.
+   ========================================================================= */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.page-main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: var(--space-xl) var(--space-md) var(--space-xxl);
+}
+
+/* =========================================================================
+   4. HEADER
+   ========================================================================= */
+.site-header {
+    text-align: center;
+    padding: var(--space-xxl) var(--space-md) var(--space-lg);
+}
+
+.site-title {
+    font-size: var(--font-size-xxl);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    letter-spacing: -0.02em;
+}
+
+.site-tagline {
+    margin-top: var(--space-sm);
+    font-size: var(--font-size-md);
+    color: var(--color-text-muted);
+}
+
+/* =========================================================================
+   5. CALCULATOR CARD
+   The card is the focal point of the page: a centered, max-width column
+   with generous internal spacing so every section inside it can breathe.
+   ========================================================================= */
+.calculator-card {
+    width: 100%;
+    max-width: var(--container-max-width);
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    padding: var(--space-xl);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xl);
+    animation: fade-in-up var(--transition-slow) ease both;
+}
+
+.calculator-intro {
+    text-align: center;
+}
+
+.calculator-title {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.calculator-description {
+    margin-top: var(--space-xs);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base);
+}
+
+/* =========================================================================
+   6. FORM (LABELS, INPUT, HINT)
+   ========================================================================= */
+.age-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.form-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.form-input {
+    width: 100%;
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--font-size-md);
+    font-family: inherit;
+    color: var(--color-text);
+    background-color: var(--color-bg-soft);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: border-color var(--transition-base), box-shadow var(--transition-base),
+        background-color var(--transition-base);
+}
+
+.form-input::placeholder {
+    color: var(--color-text-subtle);
+}
+
+.form-input:hover {
+    border-color: var(--color-primary-light);
+    background-color: var(--color-white);
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background-color: var(--color-white);
+    box-shadow: var(--shadow-focus);
+}
+
+.form-hint {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-subtle);
+}
+
+/* =========================================================================
+   7. BUTTONS
+   Flex-wrap lets the two buttons sit side by side on wide screens and
+   stack automatically on narrow ones, without a separate mobile rule.
+   ========================================================================= */
+.form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+}
+
+.btn {
+    flex: 1 1 160px;
+    padding: var(--space-md) var(--space-lg);
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: transform var(--transition-fast), box-shadow var(--transition-base),
+        background-color var(--transition-base), color var(--transition-base),
+        border-color var(--transition-base);
+}
+
+.btn:active {
+    transform: translateY(1px) scale(0.98);
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border: 2px solid var(--color-primary);
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-text-muted);
+    border: 2px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-bg-soft);
+    border-color: var(--color-text-subtle);
+    color: var(--color-text);
+}
+
+/* =========================================================================
+   8. RESULTS SECTION
+   A dedicated card with a fade-in animation draws the eye to newly
+   calculated results, and colored value boxes make each number scannable.
+   ========================================================================= */
+.results-section {
+    background-color: var(--color-bg-soft);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    animation: fade-in var(--transition-slow) ease both;
+}
+
+.results-title {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
+}
+
+.results-grid--totals {
+    margin-top: var(--space-md);
+}
+
+.result-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-md) var(--space-sm);
+    background-color: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: center;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.result-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.results-grid--totals .result-item {
+    background-color: var(--color-primary-light);
+    border-color: transparent;
+}
+
+.result-value {
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-primary-dark);
+}
+
+.results-grid--totals .result-value {
+    color: var(--color-primary-dark);
+}
+
+.result-label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+/* =========================================================================
+   9. INFORMATION CARD
+   A description list is styled as a set of icon-friendly rows on a soft
+   background, visually distinct from the primary blue results above.
+   ========================================================================= */
+.info-card {
+    background-color: var(--color-accent-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    animation: fade-in var(--transition-slow) ease both;
+}
+
+.info-card-title {
+    font-size: var(--font-size-md);
+    font-weight: 600;
+    color: var(--color-accent-dark);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+}
+
+.info-list {
+    display: grid;
+    gap: var(--space-sm);
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background-color: var(--color-white);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Bullet acts as a lightweight icon placeholder ahead of each term */
+.info-term {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.info-term::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background-color: var(--color-accent);
+    flex-shrink: 0;
+}
+
+.info-value {
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--color-accent-dark);
+    text-align: right;
+}
+
+/* =========================================================================
+   10. FOOTER
+   ========================================================================= */
+.site-footer {
+    text-align: center;
+    padding: var(--space-lg) var(--space-md) var(--space-xl);
+    color: var(--color-text-subtle);
+    font-size: var(--font-size-sm);
+}
+
+.footer-credit {
+    margin-top: var(--space-xs);
+    font-weight: 600;
+    color: var(--color-text-muted);
+}
+
+/* =========================================================================
+   11. UTILITY CLASSES
+   ========================================================================= */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* =========================================================================
+   12. ANIMATIONS
+   ========================================================================= */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================================
+   13. ACCESSIBILITY (FOCUS STATES)
+   :focus-visible keeps a strong ring for keyboard users while avoiding
+   the "focus flash" that mouse clicks would otherwise trigger.
+   ========================================================================= */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+/* =========================================================================
+   14. RESPONSIVE DESIGN (TABLET & MOBILE)
+   Breakpoints target common device classes; the card's own max-width
+   already handles desktop/laptop, so only smaller viewports need overrides.
+   ========================================================================= */
+
+/* Tablet */
+@media (max-width: 768px) {
+    .calculator-card {
+        padding: var(--space-lg);
+        gap: var(--space-lg);
+    }
+
+    .site-title {
+        font-size: var(--font-size-xl);
+    }
+
+    .results-grid {
+        gap: var(--space-sm);
+    }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+    .page-main {
+        padding: var(--space-lg) var(--space-sm) var(--space-xl);
+    }
+
+    .site-header {
+        padding: var(--space-xl) var(--space-sm) var(--space-md);
+    }
+
+    .site-title {
+        font-size: var(--font-size-lg);
+    }
+
+    .site-tagline {
+        font-size: var(--font-size-base);
+    }
+
+    .calculator-card {
+        padding: var(--space-md);
+        border-radius: var(--radius-md);
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        flex-basis: auto;
+        width: 100%;
+    }
+
+    .results-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-xs);
+    }
+
+    .info-value {
+        text-align: left;
+    }
+}
